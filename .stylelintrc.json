@@ -1,0 +1,38 @@
+{
+  "plugins": ["stylelint-order"],
+  "processors": ["stylelint-processor-styled-components"],
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-styled-components",
+    "stylelint-config-rational-order"
+  ],
+  "customSyntax": "postcss-scss",
+  "rules": {
+    "selector-class-pattern": null,
+    "value-no-vendor-prefix": [
+      true,
+      {
+        "ignoreValues": ["box"]
+      }
+    ],
+    "selector-type-case": [
+      "lower",
+      {
+        "ignoreTypes": ["/^\\$\\w+/"]
+      }
+    ],
+    "selector-type-no-unknown": [
+      true,
+      {
+        "ignoreTypes": ["/-styled-mixin/", "/^\\$\\w+/"]
+      }
+    ],
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreKeywords": ["dummyValue"]
+      }
+    ],
+    "declaration-colon-newline-after": null
+  }
+}
