@@ -31,7 +31,11 @@ export default class Auth {
     this.setLoading(true)
     this.setError('')
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, formValues)
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, formValues, {
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      })
       localStorage.setItem('token', data.token)
       localStorage.setItem('refresh_token', data.refresh_token)
       this.setAuth(true)
