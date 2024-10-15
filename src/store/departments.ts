@@ -3,7 +3,7 @@ import axios from 'axios'
 import { makeAutoObservable } from 'mobx'
 
 export default class Departments {
-  data: any[] = []
+  data: Department[] = []
   isLoading = true
 
   constructor() {
