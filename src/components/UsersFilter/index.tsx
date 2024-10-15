@@ -1,42 +1,52 @@
-import { useContext } from 'react'
+import { useEffect } from 'react'
 import { Button, Form, Input } from 'antd'
-import { Context } from '@/main'
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import * as Styled from './styles'
 
 const UsersFilter: React.FC = () => {
+  const [params] = useSearchParams()
   const [form] = Form.useForm()
-  const { users } = useContext(Context)
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
 
-  const handleFilter = () => {
-    form
-      .validateFields()
-      .then(values => {
-        const filteredParams = Object.fromEntries(
-          Object.entries(values).filter(([_, value]) => value !== undefined),
-        )
-        users.getData(new URLSearchParams(filteredParams as Record<string, string>).toString())
-      })
-      .catch(errorInfo => {
-        console.log('Validation Failed:', errorInfo)
-      })
+  useEffect(() => {
+    form.setFieldsValue({
+      name: params.get('name') || '',
+      lastName: params.get('lastName') || '',
+      position: params.get('position') || '',
+      email: params.get('email') || '',
+    })
+  }, [params, form])
+
+  const handleFilter = async () => {
+    try {
+      const values = await form.validateFields()
+      const filteredParams = Object.fromEntries(Object.entries(values).filter(([, value]) => value))
+      navigate(
+        `${pathname}?${new URLSearchParams(filteredParams as Record<string, string>).toString()}`,
+      )
+    } catch (errorInfo) {
+      console.error('Validation Failed:', errorInfo)
+    }
   }
 
   const handleResetFilter = () => {
-    users.getData()
     form.resetFields()
+    navigate(pathname)
   }
 
-  const actions: React.ReactNode[] = [
-    <Button key="filter" type="primary" onClick={handleFilter}>
-      Фільтрувати
-    </Button>,
-    <Button key="clear" onClick={handleResetFilter}>
-      Очистити
-    </Button>,
-  ]
-
   return (
-    <Styled.Filter title="Фільтри" actions={actions}>
+    <Styled.Filter
+      title="Фільтри"
+      actions={[
+        <Button key="filter" type="primary" onClick={handleFilter}>
+          Фільтрувати
+        </Button>,
+        <Button key="clear" onClick={handleResetFilter}>
+          Очистити
+        </Button>,
+      ]}
+    >
       <Form layout="vertical" form={form}>
         <Styled.FormItem label="Ім'я" name="name">
           <Input />
