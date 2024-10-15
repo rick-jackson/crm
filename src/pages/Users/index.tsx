@@ -1,31 +1,28 @@
-import { toJS } from 'mobx'
-import { observer } from 'mobx-react-lite'
-import { useContext, useEffect } from 'react'
 import { columns } from '@/common/configs/usersTableColumns'
 import UsersFilter from '@/components/UsersFilter'
 import Layout from '@/components/Layout'
-import { Context } from '@/main'
 import * as Styled from './styles'
+import User from '@/types/entities/user'
+import withAuth from '@/components/WithAuth'
 
-const UsersPage: React.FC = () => {
-  const { users } = useContext(Context)
+type UsersPageProps = {
+  data: User[]
+  isLoading: boolean
+}
 
-  useEffect(() => {
-    users.getData()
-  }, [])
-
+const UsersPage: React.FC<UsersPageProps> = ({ data, isLoading }) => {
   return (
     <Layout title="Співробітники">
       <Styled.Content>
         <UsersFilter />
         <Styled.Table
-          loading={users.isLoading}
+          loading={isLoading}
           columns={columns}
-          dataSource={toJS(users.data).map(user => ({ ...user, key: user.id }))}
+          dataSource={data.map(user => ({ ...user, key: user.id }))}
         />
       </Styled.Content>
     </Layout>
   )
 }
 
-export default observer(UsersPage)
+export default withAuth<User>(UsersPage, 'users')
