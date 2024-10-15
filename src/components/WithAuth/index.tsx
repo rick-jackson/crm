@@ -35,7 +35,7 @@ const withAuth = <T extends object>(
               auth.setAuth(false)
               navigate('/sign-in')
             } else {
-              setError(errResp?.data || { messgae: 'Сталася помилка', status: 500 })
+              setError(errResp?.data || { message: 'Сталася помилка', status: 500 })
             }
           } else {
             setError({ message: 'Сталася невідома помилка', status: 500 })
