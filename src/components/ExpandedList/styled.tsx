@@ -12,9 +12,9 @@ export const List = styled.div`
 
   .ant-collapse-header {
     align-items: center !important;
+    margin-bottom: 12px;
     background-color: #fff;
     border-radius: 8px !important;
-    margin-bottom: 12px;
   }
 
   .ant-collapse-content-box {
