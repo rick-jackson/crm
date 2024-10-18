@@ -1,28 +1,27 @@
 import styled from 'styled-components'
 import { Skeleton as AntdSkeleton } from 'antd'
 
-export const List = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-
+export const List = styled.div`
   svg {
     fill: blue;
   }
-`
 
-export const ListItem = styled.li<{ $margin: number }>`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-left: ${props => props.$margin}px;
-  padding: 12px 18px;
-  background: #fff;
-  border: 1px solid #80808038;
-  border-radius: 5px;
-  cursor: pointer;
+  .ant-collapse {
+    background: none;
+  }
+
+  .ant-collapse-header {
+    align-items: center !important;
+    background-color: #fff;
+    border-radius: 8px !important;
+    margin-bottom: 12px;
+  }
+
+  .ant-collapse-content-box {
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+  }
 `
 
 export const Skeleton = styled(AntdSkeleton.Node)`
